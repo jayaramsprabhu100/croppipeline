@@ -1,0 +1,34 @@
+---
+title: "Run pipeline - rainfall"
+author: "Joe Marlo (Lander Analytics)"
+date: "`r Sys.Date()`"
+output: html_document
+params:
+  month: !r lubridate::month(lubridate::today() - 1)
+  year: !r lubridate::year(lubridate::today() - 1)
+resource_files:
+- R/*
+- _targets.R
+- manifest.json
+- .Renviron
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Run the rainfall pipeline
+
+Look at the NOAA FTP site to see if it has been updated, pull down data and write to table
+
+```{r targets-rainfall}
+targets::tar_make(names = tidyselect::starts_with('RF_'),
+                  callr_arguments = list(env = c(month = params$month,
+                                                 year = params$year)))
+```
+
+## Notes
+
+This should be scheduled to run hourly from 10am-2pm and check if time on ftp server is updated
+
+If the dbo.crop_auto_rainfall table is already up to date, publishing this document will fail but it will still be on the Connect Server.

@@ -1,0 +1,32 @@
+---
+title: "Run pipeline - Summary of Business"
+author: "Joe Marlo (Lander Analytics)"
+date: "`r Sys.Date()`"
+output: html_document
+params:
+  year: !r lubridate::year(lubridate::today() - 1)
+  n_try: 5
+  timeout: 180
+resource_files:
+  - R/*
+  - _targets.R
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Run the Summary of Business pipeline
+
+Pull down summary of business data
+
+```{r targets-SOB}
+targets::tar_make(names = tidyselect::starts_with('SOB_'),
+                  callr_arguments = list(env = c(year = params$year,
+                                                 n_try = params$n_try,
+                                                 timeout = params$timeout)))
+```
+
+## Notes
+
+This should be run once daily but should early stop if data on database has been updated in the last 7 days.

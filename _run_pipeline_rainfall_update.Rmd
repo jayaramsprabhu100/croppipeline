@@ -1,0 +1,33 @@
+---
+title: "Run pipeline - rainfall update"
+author: "Joe Marlo (Lander Analytics)"
+date: "`r Sys.Date()`"
+output: html_document
+params:
+  month: !r lubridate::month(lubridate::today() - 1)
+  year: !r lubridate::year(lubridate::today() - 1)
+resource_files:
+  - R/*
+  - _targets.R
+  - manifest.json
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Run the rainfall update pipeline
+
+Update process looks at different FTP folder, if updated then overwrite rainfall table
+
+```{r targets-rainfall-update}
+targets::tar_make(names = tidyselect::starts_with('RFU_'),
+                  callr_arguments = list(env = c(month = params$month,
+                                                 year = params$year)))
+```
+
+## Notes
+
+This should be scheduled to run once daily on the 12th-31st once a month, 2pm+ CDT
+
+If the dbo.crop_auto_rainfall table is already up to date, publishing this document will fail but it will still be on the Connect Server.

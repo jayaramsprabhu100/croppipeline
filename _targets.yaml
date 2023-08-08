@@ -1,0 +1,5 @@
+dev:
+  store: '_targets'
+
+rsconnect:
+  store: '/fast/clients/hudson/crops/_targets' # where to store _targets meta

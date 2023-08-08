@@ -1,0 +1,21 @@
+default:
+  output: 'outputs'
+  use_db: true
+  db_tables:
+    schema: 'dbo'
+    rainfall: 'crop_auto_rainfall'
+    COL: 'crop_auto_COL'
+    SOB: 'crop_auto_SOB'
+    rain_grids: 'RainData_Grids'
+  base_urls:
+    COL: 'https://www.rma.usda.gov/en/Information-Tools/Summary-of-Business/Cause-of-Loss'
+    SOB: 'https://public-rma.fpac.usda.gov/apps/SummaryOfBusiness/ReportGenerator/ExportToExcel'
+    
+
+dev:
+  inherits: default
+  use_db: false
+
+rsconnect:
+  output: '/fast/clients/hudson/crops/outputs'
+  use_db: true

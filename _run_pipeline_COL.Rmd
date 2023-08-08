@@ -1,0 +1,33 @@
+---
+title: "Run pipeline - Cause of Loss"
+author: "Joe Marlo (Lander Analytics)"
+date: "`r Sys.Date()`"
+output: html_document
+params:
+  year: !r lubridate::year(lubridate::today() - 1)
+  timeout: 180
+resource_files:
+- R/*
+- _targets.R
+- .Rprofile
+- config.yml
+- .Renviron
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Run the Cause of Loss pipeline
+
+Pull down cause of loss data
+
+```{r targets-COL}
+targets::tar_make(names = tidyselect::starts_with('COL_'),
+                  callr_arguments = list(env = c(year = params$year,
+                                                 timeout = params$timeout)))
+```
+
+## Notes
+
+This should be run weekly.

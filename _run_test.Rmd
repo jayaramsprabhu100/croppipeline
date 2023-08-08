@@ -1,0 +1,26 @@
+---
+title: "Test database connection"
+output: html_document
+date: "2023-03-16"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This docuemnt is for testing if the Post Connect server as access to the database.
+
+```{r}
+connect_to_DB <- function(prod = FALSE){
+  
+  if (!isTRUE(prod)) return(NULL)
+  
+  sandbox <- 'driver=ODBC Driver 17 for SQL Server; server=stm-actdb-19; database=Sandbox; trusted_connection=yes'
+  con <- DBI::dbConnect(odbc::odbc(), .connection_string = sandbox)
+  
+  return(con)
+}
+
+print(connect_to_DB(TRUE))
+```
+
