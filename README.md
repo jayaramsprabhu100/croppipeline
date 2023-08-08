@@ -108,7 +108,7 @@ Unit tests are written using `testthat` and can be found in the `/tests/testhat`
 
 ## Suggestions for future enchancements
 
-- Place this codebase within a git hosting service for version tracking. -- in progress 
+- Place this codebase within a git hosting service for version tracking
 - Educate a subject matter expert on `targets` so any future adjustments can be made. I foresee the government URLs may change.  
 - Find a static source of data such as an FTP source instead of the report generators. The generator is quite fickle. 
 
